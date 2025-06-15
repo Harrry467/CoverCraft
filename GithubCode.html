@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CoverCraft AI - Professional Cover Letter Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#3b82f6",
+              secondary: "#64748b",
+            },
+            borderRadius: {
+              none: "0px",
+              sm: "4px",
+              DEFAULT: "8px",
+              md: "12px",
+              lg: "16px",
+              xl: "20px",
+              "2xl": "24px",
+              "3xl": "32px",
+              full: "9999px",
+              button: "8px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      :where([class^="ri-"])::before { content: "\f3c2"; }
+      body {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e6f3ff 100%);
+      background-attachment: fixed;
+      }
+      .chatbot-container {
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 20px 40px -5px rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      backdrop-filter: blur(10px);
+      }
+      .login-prompt {
+      display: none;
+      position: absolute;
+      bottom: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      animation: slideUp 0.3s ease-out;
+      }
+      @keyframes slideUp {
+      from { transform: translateY(10px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+      }
+      .chat-message {
+      animation: fadeIn 0.3s ease-in-out;
+      }
+      @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+      }
+      .blur-effect {
+      filter: blur(2px);
+      }
+      .paywall-modal {
+      animation: scaleIn 0.3s ease-out;
+      }
+      @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+      }
+      .pricing-card:hover {
+      transform: translateY(-5px);
+      transition: transform 0.3s ease;
+      }
+      .custom-checkbox {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #cbd5e1;
+      border-radius: 4px;
+      outline: none;
+      transition: all 0.2s;
+      position: relative;
+      }
+      .custom-checkbox:checked {
+      background-color: #3b82f6;
+      border-color: #3b82f6;
+      }
+      .custom-checkbox:checked::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 6px;
+      width: 6px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+      }
+      .custom-switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+      }
+      .custom-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      }
+      .switch-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #cbd5e1;
+      transition: .4s;
+      border-radius: 24px;
+      }
+      .switch-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+      }
+      input:checked + .switch-slider {
+      background-color: #3b82f6;
+      }
+      input:checked + .switch-slider:before {
+      transform: translateX(20px);
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="w-full bg-white shadow-sm sticky top-0 z-50">
+      <div
+        class="container mx-auto px-4 py-4 flex items-center justify-between"
+      >
+        <div class="flex items-center">
+          <a href="#" class="text-2xl font-['Pacifico'] text-primary mr-8"
+            >CoverCraft AI</a
+          >
+          <nav class="hidden md:flex space-x-8">
+            <a
+              href="#"
+              class="text-gray-800 hover:text-primary font-medium transition-colors"
+              >Home</a
+            >
+            <a
+              href="#"
+              class="text-gray-800 hover:text-primary font-medium transition-colors"
+              >How It Works</a
+            >
+            <a
+              href="#"
+              class="text-gray-800 hover:text-primary font-medium transition-colors"
+              >Pricing</a
+            >
+            <a
+              href="#"
+              class="text-gray-800 hover:text-primary font-medium transition-colors"
+              >About</a
+            >
+          </nav>
+        </div>
+        <div class="flex items-center space-x-4">
+          <button
+            class="text-gray-700 font-medium hover:text-primary transition-colors whitespace-nowrap"
+          >
+            Sign In
+          </button>
+          <button
+            class="bg-primary text-white px-5 py-2 !rounded-button font-medium hover:bg-blue-600 transition-colors whitespace-nowrap"
+          >
+            Sign Up
+          </button>
+          <button
+            class="md:hidden w-10 h-10 flex items-center justify-center text-gray-700"
+          >
+            <i class="ri-menu-line ri-lg"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+      <!-- Hero Section -->
+      <section class="text-center mb-16">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          AI-Powered Cover Letters<br />Tailored to Your Experience
+        </h1>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+          Upload your previous cover letters and let our AI craft personalized,
+          professional cover letters that help you stand out to employers.
+        </p>
+        <div class="flex justify-center space-x-4">
+          <button
+            class="bg-primary text-white px-6 py-3 !rounded-button font-medium hover:bg-blue-600 transition-colors whitespace-nowrap flex items-center"
+          >
+            <i class="ri-rocket-line ri-lg mr-2"></i>
+            Get Started
+          </button>
+          <button
+            class="bg-white text-gray-800 border border-gray-300 px-6 py-3 !rounded-button font-medium hover:bg-gray-50 transition-colors whitespace-nowrap flex items-center"
+          >
+            <i class="ri-play-circle-line ri-lg mr-2"></i>
+            Watch Demo
+          </button>
+        </div>
+      </section>
+      <!-- Chatbot Section -->
+      <section class="max-w-4xl mx-auto mb-20 relative" id="chatbot-section">
+        <div class="chatbot-container rounded-xl overflow-hidden">
+          <!-- Chatbot Header -->
+          <div
+            class="bg-white p-4 border-b border-gray-100 flex items-center justify-between"
+          >
+            <div class="flex items-center">
+              <div
+                class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full text-primary mr-3"
+              >
+                <i class="ri-robot-line ri-lg"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-900">CoverCraft AI</h3>
+                <p class="text-xs text-gray-500">Online • Ready to help</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-2">
+              <button
+                class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-700 rounded-full hover:bg-gray-100"
+              >
+                <i class="ri-refresh-line"></i>
+              </button>
+              <button
+                class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-700 rounded-full hover:bg-gray-100"
+              >
+                <i class="ri-settings-3-line"></i>
+              </button>
+            </div>
+          </div>
+          <!-- Chatbot Messages -->
+          <div class="h-96 overflow-y-auto p-4 bg-gray-50" id="chat-messages">
+            <div class="chat-message flex mb-4">
+              <div
+                class="w-8 h-8 flex items-center justify-center bg-blue-100 rounded-full text-primary mr-2 flex-shrink-0"
+              >
+                <i class="ri-robot-line"></i>
+              </div>
+              <div class="bg-white p-3 rounded-lg shadow-sm max-w-[80%]">
+                <p class="text-gray-800">
+                  Hello! I'm your AI cover letter assistant. Let's create your
+                  personalized cover letter in 3 steps:
+                </p>
+                <ol class="text-gray-700 mt-2 ml-4 list-decimal">
+                  <li>Share your previous job descriptions</li>
+                  <li>Paste the new job description</li>
+                  <li>I'll craft a tailored cover letter for you</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+          <!-- Input Areas -->
+          <div class="p-4 bg-white border-t border-gray-100">
+            <div class="mb-4">
+              <label class="block text-gray-700 font-medium mb-2"
+                >Previous Cover Letters</label
+              >
+              <div class="space-y-2">
+                <textarea
+                  id="previous-letters"
+                  class="w-full h-32 p-3 border border-gray-200 rounded-lg focus:outline-none focus:border-primary resize-none"
+                  placeholder="Paste your previous cover letters here... This helps our AI understand your writing style and experience."
+                ></textarea>
+                <p class="text-sm text-gray-500">
+                  For best results, share 2-3 of your previous cover letters.
+                  Our AI will analyze your writing style and experience to
+                  create a personalized letter.
+                </p>
+              </div>
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 font-medium mb-2"
+                >New Job Description</label
+              >
+              <textarea
+                id="new-job"
+                class="w-full h-32 p-3 border border-gray-200 rounded-lg focus:outline-none focus:border-primary resize-none"
+                placeholder="Paste the job description you're applying for..."
+              ></textarea>
+            </div>
+            <button
+              id="generate-letter"
+              class="w-full bg-primary text-white px-4 py-3 !rounded-button font-medium hover:bg-blue-600 transition-colors"
+            >
+              Generate Cover Letter
+            </button>
+          </div>
+          <!-- Chatbot Input -->
+          <div class="bg-white p-4 border-t border-gray-100 relative">
+            <div class="login-prompt mb-4" id="loginPrompt">
+              <p class="text-gray-800 font-medium mb-2">
+                Please log in and subscribe to use our AI cover letter generator
+              </p>
+              <p class="text-gray-600 mb-4">Only £30 for unlimited access!</p>
+              <button
+                class="bg-primary text-white px-6 py-2 !rounded-button font-medium hover:bg-blue-600 transition-colors whitespace-nowrap"
+                onclick="window.location.href='#paywall-modal'"
+              >
+                Subscribe Now
+              </button>
+            </div>
+            <div class="flex items-center">
+              <button
+                class="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-primary"
+              >
+                <i class="ri-attachment-2-line ri-lg"></i>
+              </button>
+              <div
+                class="flex-1 bg-gray-100 rounded-full px-4 py-2 mx-2 flex items-center"
+              >
+                <input
+                  type="text"
+                  id="chatInput"
+                  placeholder="Type your message..."
+                  class="bg-transparent w-full focus:outline-none text-gray-700 border-none"
+                />
+              </div>
+              <button
+                class="w-10 h-10 flex items-center justify-center text-white bg-primary rounded-full"
+                id="sendMessage"
+              >
+                <i class="ri-send-plane-fill ri-lg"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Paywall Modal (Hidden by default) -->
+      <div
+        class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden"
+        id="paywall-modal"
+      >
+        <div
+          class="bg-white rounded-xl shadow-2xl max-w-4xl w-full mx-4 paywall-modal overflow-hidden"
+        >
+          <div class="p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-b">
+            <div class="flex justify-between items-center">
+              <h2 class="text-2xl font-bold text-gray-900">
+                Unlock Premium Features
+              </h2>
+              <button
+                class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-700 rounded-full hover:bg-white hover:bg-opacity-50"
+                id="close-paywall"
+              >
+                <i class="ri-close-line ri-lg"></i>
+              </button>
+            </div>
+            <p class="text-gray-600 mt-2">
+              Choose a plan that works for your job search needs
+            </p>
+          </div>
+          <div class="p-6">
+            <div class="grid md:grid-cols-3 gap-6">
+              <!-- Basic Plan -->
+              <div
+                class="pricing-card border border-gray-200 rounded-xl p-6 transition-all duration-300 hover:shadow-lg"
+              >
+                <div class="mb-4">
+                  <h3 class="text-xl font-semibold text-gray-900 mb-2">
+                    Basic
+                  </h3>
+                  <p class="text-gray-600 text-sm">
+                    Perfect for occasional job seekers
+                  </p>
+                </div>
+                <div class="mb-6">
+                  <span class="text-3xl font-bold text-gray-900">$9.99</span>
+                  <span class="text-gray-500">/month</span>
+                </div>
+                <ul class="space-y-3 mb-6">
+                  <li class="flex items-start">
+                    <div
+                      class="w-5 h-5 flex items-center justify-center text-primary mr-2 mt-0.5"
+                    >
+                      <i class="ri-check-line"></i>
+                    </div>
+                    <span class="text-gray-700"
+                      >5 AI-generated cover letters</span
+                    >
+                  </li>
+                  <li class="flex items-start">
+                    <div
+                      class="w-5 h-5 flex items-center justify-center text-primary mr-2 mt-0.5"
+                    >
+                      <i class="ri-check-line"></i>
+                    </div>
+                    <span class="text-gray-700">Basic templates</span>
+                  </li>
+                  <li class="flex items-start">
+                    <div
+                      class="w-5 h-5 flex items-center justify-center text-primary mr-2 mt-0.5"
+                    >
+                      <i class="ri-check-line"></i>
+                    </div>
+                    <span class="text-gray-700">Email support</span>
+                  </li>
+                </ul>
+                <button
+                  class="w-full bg-white border border-gray-300 text-gray-800 px-4 py-2 !rounded-button font-medium hover:bg-gray-50 transition-colors whitespace-nowrap"
+                >
+                  Choose Basic
+                </button>
+              </div>
+              <!-- Pro Plan -->
+              <div
+                class="pricing-card border-2 border-primary rounded-xl p-6 transition-all duration-300 hover:shadow-lg relative"
+              >
+                <div
+                  class="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg"
+                >
+                  POPULAR
+                </div>
+                <div class="mb-4">
+                  <h3 class="text-xl font-semibold text-gray-900 mb-2">Pro</h3>
+                  <p class="text-gray-600 text-sm">For active job seekers</p>
+                </div>
+                <div class="mb-6">
+                  <span class="text-3xl font-bold text-gray-900">$19.99</span>
+                  <span class="text-gray-500">/month</span>
+                </div>
+                <ul class="space-y-3 mb-6">
+                  <li class="flex items-start">
+                    <div
+                      class="w-5 h-5 flex items-center justify-center text-primary mr-2 mt-0.5"
+                    >
+                      <i class="ri-check-line"></i>
+                    </div>
+                    <span class="text-gray-700">Unlimited cover letters</span>
+                  </li>
+                  <li class="flex items-start">
+                    <div
+                      class="w-5 h-5 flex items-center justify-center text-primary mr-2 mt-0.5"
+                    >
+                      <i class="ri-check-line"></i>
+                    </div>
+                    <span class="text-gray-700">Premium templates</span>
+                  </li>
+                  <li class="flex items-start">
+                    <div
+                      class="w-5 h-5 flex items-center justify-center text-primary mr-2 mt-0.5"
+                    >
+                      <i class="ri-check-line"></i>
+                    </div>
+                    <span class="text-gray-700">Priority support</span>
+                  </li>
+                  <li class="flex items-start">
+                    <div
+                      class="w-5 h-5 flex items-center justify-center text-primary mr-2 mt-0.5"
+                    >
+                      <i class="ri-check-line"></i>
+                    </div>
+                    <span class="text-gray-700"
+                      >Industry-specific optimization</span
+                    >
+                  </li>
+                </ul>
+                <button
+                  class="w-full bg-primary text-white px-4 py-2 !rounded-button font-medium hover:bg-blue-600 transition-colors whitespace-nowrap"
+                >
+                  Choose Pro
+                </button>
+              </div>
+              <!-- Enterprise Plan -->
+              <div
+                class="pricing-card border border-gray-200 rounded-xl p-6 transition-all duration-300 hover:shadow-lg"
+              >
+                <div class="mb-4">
+                  <h3 class="text-xl font-semibold text-gray-900 mb-2">
+                    Enterprise
+                  </h3>
+                  <p class="text-gray-600 text-sm">For career professionals</p>
+                </div>
+                <div class="mb-6">
+                  <span class="text-3xl font-bold text-gray-900">$39.99</span>
+                  <span class="text-gray-500">/month</span>
+                </div>
+                <ul class="space-y-3 mb-6">
+                  <li class="flex items-start">
+                    <div
+                      class="w-5 h-5 flex items-center justify-center text-primary mr-2 mt-0.5"
+                    >
+                      <i class="ri-check-line"></i>
+                    </div>
+                    <span class="text-gray-700">Everything in Pro</span>
+                  </li>
+                  <li class="flex items-start">
+                    <div
+                      class="w-5 h-5 flex items-center justify-center text-primary mr-2 mt-0.5"
+                    >
+                      <i class="ri-check-line"></i>
+                    </div>
+                    <span class="text-gray-700">Resume optimization</span>
+                  </li>
+                  <li class="flex items-start">
+                    <div
+                      class="w-5 h-5 flex items-center justify-center text-primary mr-2 mt-0.5"
+                    >
+                      <i class="ri-check-line"></i>
+                    </div>
+                    <span class="text-gray-700"
+                      >LinkedIn profile enhancement</span
+                    >
+                  </li>
+                  <li class="flex items-start">
+                    <div
+                      class="w-5 h-5 flex items-center justify-center text-primary mr-2 mt-0.5"
+                    >
+                      <i class="ri-check-line"></i>
+                    </div>
+                    <span class="text-gray-700"
+                      >1-on-1 career coaching session</span
+                    >
+                  </li>
+                </ul>
+                <button
+                  class="w-full bg-white border border-gray-300 text-gray-800 px-4 py-2 !rounded-button font-medium hover:bg-gray-50 transition-colors whitespace-nowrap"
+                >
+                  Choose Enterprise
+                </button>
+              </div>
+            </div>
+            <div class="mt-8 p-4 bg-gray-50 rounded-lg">
+              <div class="flex items-center justify-between flex-wrap gap-4">
+                <div class="flex items-center">
+                  <input
+                    type="checkbox"
+                    id="annual-billing"
+                    class="custom-checkbox mr-3"
+                  />
+                  <label for="annual-billing" class="text-gray-700"
+                    >Annual billing (save 20%)</label
+                  >
+                </div>
+                <div class="flex items-center space-x-4">
+                  <div class="flex items-center space-x-2">
+                    <div
+                      class="w-6 h-6 flex items-center justify-center text-primary"
+                    >
+                      <i class="ri-shield-check-line"></i>
+                    </div>
+                    <span class="text-sm text-gray-600">Secure Payment</span>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <div
+                      class="w-6 h-6 flex items-center justify-center text-primary"
+                    >
+                      <i class="ri-refund-2-line"></i>
+                    </div>
+                    <span class="text-sm text-gray-600">30-Day Money Back</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-6 flex justify-center">
+              <div class="flex space-x-4">
+                <div
+                  class="w-10 h-6 flex items-center justify-center text-gray-600"
+                >
+                  <i class="ri-visa-fill ri-lg"></i>
+                </div>
+                <div
+                  class="w-10 h-6 flex items-center justify-center text-gray-600"
+                >
+                  <i class="ri-mastercard-fill ri-lg"></i>
+                </div>
+                <div
+                  class="w-10 h-6 flex items-center justify-center text-gray-600"
+                >
+                  <i class="ri-paypal-fill ri-lg"></i>
+                </div>
+                <div
+                  class="w-10 h-6 flex items-center justify-center text-gray-600"
+                >
+                  <i class="ri-apple-fill ri-lg"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Features Section -->
+      <section class="mb-20">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold text-gray-900 mb-4">
+            Why Choose Our AI Cover Letter Generator
+          </h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            Our advanced AI analyzes your previous work to create personalized
+            cover letters that highlight your unique qualifications.
+          </p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div
+            class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
+          >
+            <div
+              class="w-12 h-12 flex items-center justify-center bg-blue-100 rounded-lg text-primary mb-4"
+            >
+              <i class="ri-ai-generate ri-lg"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">
+              AI-Powered Writing
+            </h3>
+            <p class="text-gray-600">
+              Our advanced AI learns your writing style and professional
+              experience to create personalized cover letters that sound
+              authentically like you.
+            </p>
+          </div>
+          <div
+            class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
+          >
+            <div
+              class="w-12 h-12 flex items-center justify-center bg-blue-100 rounded-lg text-primary mb-4"
+            >
+              <i class="ri-file-text-line ri-lg"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">
+              Professional Templates
+            </h3>
+            <p class="text-gray-600">
+              Choose from dozens of industry-specific templates designed by
+              career experts to make your application stand out to hiring
+              managers.
+            </p>
+          </div>
+          <div
+            class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
+          >
+            <div
+              class="w-12 h-12 flex items-center justify-center bg-blue-100 rounded-lg text-primary mb-4"
+            >
+              <i class="ri-time-line ri-lg"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">
+              Time-Saving Efficiency
+            </h3>
+            <p class="text-gray-600">
+              Generate tailored cover letters in minutes, not hours. Focus your
+              energy on preparing for interviews instead of writing repetitive
+              applications.
+            </p>
+          </div>
+        </div>
+      </section>
+      <!-- Testimonials -->
+      <section class="mb-20 bg-gray-50 py-12 rounded-xl">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold text-gray-900 mb-4">
+            What Our Users Say
+          </h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            Join thousands of job seekers who have improved their application
+            success rate.
+          </p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto px-4">
+          <div
+            class="bg-white p-6 rounded-xl shadow-sm transform hover:scale-105 transition-transform"
+          >
+            <div class="flex items-center mb-4">
+              <div class="text-yellow-400 flex">
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+              </div>
+              <span class="ml-2 text-sm text-gray-600">Verified Purchase</span>
+            </div>
+            <p class="text-gray-700 mb-4">
+              "The AI understood exactly what I wanted to convey in my cover
+              letters. It captured my experience perfectly and helped me tailor
+              each application. I received interview calls from 4 out of 5
+              companies I applied to. This tool is a game-changer for job
+              seekers!"
+            </p>
+            <div class="flex items-center">
+              <div
+                class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full text-primary mr-3"
+              >
+                <i class="ri-user-line"></i>
+              </div>
+              <div>
+                <h4 class="font-medium text-gray-900">Alexandra Chen</h4>
+                <p class="text-sm text-gray-500">Marketing Specialist</p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="bg-white p-6 rounded-xl shadow-sm transform hover:scale-105 transition-transform"
+          >
+            <div class="flex items-center mb-4">
+              <div class="text-yellow-400 flex">
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+              </div>
+              <span class="ml-2 text-sm text-gray-600">Verified Purchase</span>
+            </div>
+            <p class="text-gray-700 mb-4">
+              "After struggling with writer's block, this AI tool helped me
+              create compelling cover letters that truly represented my skills.
+              The AI's ability to maintain my professional voice while
+              highlighting relevant experience is remarkable. Within two weeks
+              of using it, I landed my dream job at a Fortune 500 company!"
+            </p>
+            <div class="flex items-center">
+              <div
+                class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full text-primary mr-3"
+              >
+                <i class="ri-user-line"></i>
+              </div>
+              <div>
+                <h4 class="font-medium text-gray-900">James Rodriguez</h4>
+                <p class="text-sm text-gray-500">Software Developer</p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="bg-white p-6 rounded-xl shadow-sm transform hover:scale-105 transition-transform"
+          >
+            <div class="flex items-center mb-4">
+              <div class="text-yellow-400 flex">
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+              </div>
+              <span class="ml-2 text-sm text-gray-600">Verified Purchase</span>
+            </div>
+            <p class="text-gray-700 mb-4">
+              "Absolutely brilliant service! The AI crafts such professional and
+              personalized cover letters. I've recommended it to all my
+              colleagues. It's amazing how it maintains your voice while making
+              your experience shine. The customization options helped me
+              transition my skills effectively into a new industry!"
+            </p>
+            <div class="flex items-center">
+              <div
+                class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full text-primary mr-3"
+              >
+                <i class="ri-user-line"></i>
+              </div>
+              <div>
+                <h4 class="font-medium text-gray-900">Olivia Martinez</h4>
+                <p class="text-sm text-gray-500">Career Changer</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- FAQ Section -->
+      <section class="mb-20">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold text-gray-900 mb-4">
+            Frequently Asked Questions
+          </h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            Find answers to common questions about our AI cover letter
+            generator.
+          </p>
+        </div>
+        <div class="max-w-3xl mx-auto" id="faq-container">
+          <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden">
+            <button
+              class="w-full flex items-center justify-between p-4 text-left bg-white hover:bg-gray-50 transition-colors"
+              data-faq-toggle
+            >
+              <span class="font-medium text-gray-900"
+                >How does the AI create personalized cover letters?</span
+              >
+              <div
+                class="w-6 h-6 flex items-center justify-center text-gray-500"
+              >
+                <i class="ri-arrow-down-s-line"></i>
+              </div>
+            </button>
+            <div
+              class="p-4 bg-gray-50 border-t border-gray-200 hidden"
+              data-faq-content
+            >
+              <p class="text-gray-700">
+                Our AI analyzes your previous cover letters and resume to
+                understand your experience, skills, and writing style. It then
+                generates customized cover letters that match your tone while
+                highlighting relevant qualifications for each specific job
+                application.
+              </p>
+            </div>
+          </div>
+          <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden">
+            <button
+              class="w-full flex items-center justify-between p-4 text-left bg-white hover:bg-gray-50 transition-colors"
+              data-faq-toggle
+            >
+              <span class="font-medium text-gray-900">Is my data secure?</span>
+              <div
+                class="w-6 h-6 flex items-center justify-center text-gray-500"
+              >
+                <i class="ri-arrow-down-s-line"></i>
+              </div>
+            </button>
+            <div
+              class="p-4 bg-gray-50 border-t border-gray-200 hidden"
+              data-faq-content
+            >
+              <p class="text-gray-700">
+                Yes, we take data security very seriously. All your documents
+                are encrypted, and we never share your information with third
+                parties. Your data is only used to generate your cover letters
+                and improve our AI model's performance.
+              </p>
+            </div>
+          </div>
+          <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden">
+            <button
+              class="w-full flex items-center justify-between p-4 text-left bg-white hover:bg-gray-50 transition-colors"
+              data-faq-toggle
+            >
+              <span class="font-medium text-gray-900"
+                >Can I edit the generated cover letters?</span
+              >
+              <div
+                class="w-6 h-6 flex items-center justify-center text-gray-500"
+              >
+                <i class="ri-arrow-down-s-line"></i>
+              </div>
+            </button>
+            <div
+              class="p-4 bg-gray-50 border-t border-gray-200 hidden"
+              data-faq-content
+            >
+              <p class="text-gray-700">
+                Absolutely! While our AI creates high-quality cover letters, you
+                have full editing capabilities to make any adjustments you want.
+                You can modify the content, format, or tone to ensure it
+                perfectly matches your preferences before sending it to
+                employers.
+              </p>
+            </div>
+          </div>
+          <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden">
+            <button
+              class="w-full flex items-center justify-between p-4 text-left bg-white hover:bg-gray-50 transition-colors"
+              data-faq-toggle
+            >
+              <span class="font-medium text-gray-900"
+                >How many cover letters can I generate?</span
+              >
+              <div
+                class="w-6 h-6 flex items-center justify-center text-gray-500"
+              >
+                <i class="ri-arrow-down-s-line"></i>
+              </div>
+            </button>
+            <div
+              class="p-4 bg-gray-50 border-t border-gray-200 hidden"
+              data-faq-content
+            >
+              <p class="text-gray-700">
+                The number of cover letters you can generate depends on your
+                subscription plan. Basic plans include 5 cover letters per
+                month, while Pro and Enterprise plans offer unlimited generation
+                to support active job seekers.
+              </p>
+            </div>
+          </div>
+          <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden">
+            <button
+              class="w-full flex items-center justify-between p-4 text-left bg-white hover:bg-gray-50 transition-colors"
+              data-faq-toggle
+            >
+              <span class="font-medium text-gray-900"
+                >How do you ensure the quality of generated cover letters?</span
+              >
+              <div
+                class="w-6 h-6 flex items-center justify-center text-gray-500"
+              >
+                <i class="ri-arrow-down-s-line"></i>
+              </div>
+            </button>
+            <div
+              class="p-4 bg-gray-50 border-t border-gray-200 hidden"
+              data-faq-content
+            >
+              <p class="text-gray-700">
+                Our AI performs multiple rounds of quality checks, including
+                analyzing logical flow, ensuring consistency with your
+                experience, and maintaining professional tone. You can also
+                provide feedback and make adjustments to further refine the
+                output.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- CTA Section -->
+      <section
+        class="mb-20 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-8 md:p-12"
+      >
+        <div class="max-w-4xl mx-auto text-center">
+          <h2 class="text-3xl font-bold text-gray-900 mb-4">
+            Ready to Land Your Dream Job?
+          </h2>
+          <p class="text-xl text-gray-700 mb-8">
+            Join thousands of job seekers who are using AI to create standout
+            cover letters and improve their chances of getting hired.
+          </p>
+          <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <button
+              class="bg-primary text-white px-8 py-3 !rounded-button font-medium hover:bg-blue-600 transition-colors whitespace-nowrap"
+            >
+              Get Started Now
+            </button>
+            <a
+              href="https://readdy.ai/home/e830a25c-078a-4066-aac7-8cee037d5c72/cd6f9f1f-649c-45ad-8c21-22e6efbc95a0"
+              data-readdy="true"
+              class="inline-block"
+            >
+              <button
+                class="bg-white text-gray-800 border border-gray-300 px-8 py-3 !rounded-button font-medium hover:bg-gray-50 transition-colors whitespace-nowrap"
+              >
+                View Sample Letters
+              </button>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+      <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-4 gap-8 mb-8">
+          <div>
+            <a
+              href="#"
+              class="text-2xl font-['Pacifico'] text-white mb-4 inline-block"
+              >logo</a
+            >
+            <p class="text-gray-400 mb-4">
+              AI-powered cover letter generator that helps job seekers create
+              personalized, professional cover letters in minutes.
+            </p>
+            <div class="flex space-x-4">
+              <a
+                href="#"
+                class="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-white rounded-full hover:bg-gray-800"
+              >
+                <i class="ri-twitter-x-line"></i>
+              </a>
+              <a
+                href="#"
+                class="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-white rounded-full hover:bg-gray-800"
+              >
+                <i class="ri-linkedin-line"></i>
+              </a>
+              <a
+                href="#"
+                class="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-white rounded-full hover:bg-gray-800"
+              >
+                <i class="ri-facebook-line"></i>
+              </a>
+              <a
+                href="#"
+                class="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-white rounded-full hover:bg-gray-800"
+              >
+                <i class="ri-instagram-line"></i>
+              </a>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-4">Product</h3>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >Features</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >Pricing</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >Templates</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >Integrations</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >API</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-4">Resources</h3>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >Blog</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >Career Tips</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >Help Center</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >Webinars</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >Community</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-4">Company</h3>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >About Us</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >Careers</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >Press</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >Contact</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-colors"
+                  >Partners</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="border-t border-gray-800 pt-8">
+          <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0">
+              <p class="text-gray-400">
+                © 2025 CoverCraft AI. All rights reserved.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-4">
+              <a
+                href="#"
+                class="text-gray-400 hover:text-white transition-colors"
+                >Terms of Service</a
+              >
+              <a
+                href="#"
+                class="text-gray-400 hover:text-white transition-colors"
+                >Privacy Policy</a
+              >
+              <a
+                href="#"
+                class="text-gray-400 hover:text-white transition-colors"
+                >Cookie Policy</a
+              >
+              <a
+                href="#"
+                class="text-gray-400 hover:text-white transition-colors"
+                >Accessibility</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- Scripts -->
+    <script id="chatbot-interaction">
+      document.addEventListener("DOMContentLoaded", function () {
+        const chatMessages = document.getElementById("chat-messages");
+        const previousLetters = document.getElementById("previous-letters");
+        const newJob = document.getElementById("new-job");
+        const generateButton = document.getElementById("generate-letter");
+        const sendButton = document.getElementById("sendMessage");
+        const chatInput = document.getElementById("chatInput");
+        function addMessage(content, isAI = true) {
+          const messageDiv = document.createElement("div");
+          messageDiv.className = `chat-message flex mb-4 ${isAI ? "" : "justify-end"}`;
+          const message = `
+      ${
+        isAI
+          ? `
+      <div class="w-8 h-8 flex items-center justify-center bg-blue-100 rounded-full text-primary mr-2 flex-shrink-0">
+      <i class="ri-robot-line"></i>
+      </div>
+      <div class="bg-white p-3 rounded-lg shadow-sm max-w-[80%]">
+      `
+          : `
+      <div class="bg-blue-50 p-3 rounded-lg shadow-sm max-w-[80%]">
+      `
+      }
+      <p class="text-gray-800">${content}</p>
+      </div>
+      ${
+        !isAI
+          ? `
+      <div class="w-8 h-8 flex items-center justify-center bg-gray-200 rounded-full text-gray-600 ml-2 flex-shrink-0">
+      <i class="ri-user-line"></i>
+      </div>
+      `
+          : ""
+      }
+      `;
+          messageDiv.innerHTML = message;
+          chatMessages.appendChild(messageDiv);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        function generateCoverLetter(
+          previousCoverLetters,
+          jobDescription,
+          userFeedback = "",
+        ) {
+          // Extract key information from previous cover letters
+          function extractKeyInfo(text) {
+            const info = {
+              companies:
+                text.match(
+                  /\b[A-Z][a-zA-Z]+(?: [A-Z][a-zA-Z]+)*(?:,? (?:Inc|LLC|Ltd|Limited))?\b/g,
+                ) || [],
+              projects:
+                text.match(/(?:developed|created|managed|led) [^.!?]*?(?=\.|$)/g) ||
+                [],
+              skills:
+                text.match(
+                  /(?:proficient in|experienced with|skilled at|expertise in) [^.!?]*?(?=\.|$)/g,
+                ) || [],
+              achievements:
+                text.match(
+                  /(?:achieved|increased|improved|reduced|saved|generated) [^.!?]*?(?=\.|$)/g,
+                ) || [],
+            };
+            return info;
+          }
+          function refineContent(content, feedback) {
+            if (!feedback) return content;
+            // Incorporate user feedback
+            const refinements = {
+              emphasis: feedback.match(/emphasize|highlight|focus on|stress/gi),
+              remove: feedback.match(/remove|exclude|don't mention|less about/gi),
+              add: feedback.match(/add|include|mention|more about/gi),
+            };
+            let refinedContent = content;
+            if (refinements.emphasis) {
+              refinements.emphasis.forEach((term) => {
+                const emphasis = term
+                  .replace(/emphasize|highlight|focus on|stress/gi, "")
+                  .trim();
+                refinedContent = refinedContent.replace(
+                  new RegExp(`(${emphasis})`, "gi"),
+                  (match) => `${match} particularly`,
+                );
+              });
+            }
+            if (refinements.remove) {
+              refinements.remove.forEach((term) => {
+                const removal = term
+                  .replace(/remove|exclude|don't mention|less about/gi, "")
+                  .trim();
+                refinedContent = refinedContent.replace(
+                  new RegExp(`[^.]*${removal}[^.]*\.`, "gi"),
+                  "",
+                );
+              });
+            }
+            if (refinements.add) {
+              refinements.add.forEach((term) => {
+                const addition = term
+                  .replace(/add|include|mention|more about/gi, "")
+                  .trim();
+                refinedContent += ` Additionally, my experience with ${addition} would be valuable in this role.`;
+              });
+            }
+            return refinedContent;
+          }
+          function validateLogic(content) {
+            // Check for logical consistency
+            const sentences = content.split(/[.!?]+/).filter(Boolean);
+            const logicalErrors = [];
+            // Check for redundancy
+            const uniqueSentences = new Set(
+              sentences.map((s) => s.trim().toLowerCase()),
+            );
+            if (uniqueSentences.size < sentences.length) {
+              content = Array.from(uniqueSentences).join(". ") + ".";
+            }
+            // Check for proper transitions
+            sentences.forEach((sentence, index) => {
+              if (index > 0) {
+                const previousSentence = sentences[index - 1];
+                if (
+                  !sentence.match(
+                    /moreover|furthermore|additionally|also|in addition|similarly|however|therefore|thus|consequently/i,
+                  )
+                ) {
+                  content = content.replace(
+                    sentence,
+                    `Furthermore, ${sentence.trim()}`,
+                  );
+                }
+              }
+            });
+            return content;
+          }
+          // Analyze writing style
+          function analyzeStyle(text) {
+            const style = {
+              formal:
+                (text.match(/furthermore|moreover|additionally|therefore/gi) || [])
+                  .length > 0,
+              technical:
+                (text.match(/implemented|developed|architected|engineered/gi) || [])
+                  .length > 0,
+              confident:
+                (text.match(/successfully|effectively|expertly|confidently/gi) || [])
+                  .length > 0,
+              passionate:
+                (text.match(/excited|passionate|enthusiastic|eager/gi) || []).length >
+                0,
+            };
+            return Object.entries(style).sort((a, b) => b[1] - a[1])[0][0];
+          }
+          // Extract job requirements
+          const requirements =
+            jobDescription.match(
+              /(?:required|must have|looking for|responsibilities include) [^.!?]*?(?=\.|$)/g,
+            ) || [];
+          const keySkills =
+            jobDescription.match(
+              /\b(?:years of experience|proficiency|knowledge|skills|expertise)\b[^.!?]*?(?=\.|$)/g,
+            ) || [];
+          // Get key information and style from previous letters
+          const previousInfo = extractKeyInfo(previousCoverLetters);
+          const writingStyle = analyzeStyle(previousCoverLetters);
+          // Generate personalized content based on style and requirements
+          function generateParagraph(topic, style) {
+            const stylePatterns = {
+              formal: {
+                intro: "I am writing to express my strong interest in",
+                transition: "Furthermore",
+                closing: "I look forward to the opportunity to discuss",
+              },
+              technical: {
+                intro: "With extensive experience in",
+                transition: "Additionally",
+                closing: "I am eager to apply my technical expertise to",
+              },
+              confident: {
+                intro: "I am excited to bring my proven track record in",
+                transition: "Moreover",
+                closing: "I am confident in my ability to contribute to",
+              },
+              passionate: {
+                intro: "I am thrilled about the opportunity to bring my passion for",
+                transition: "What's more",
+                closing: "I am enthusiastic about the possibility of",
+              },
+            };
+            return stylePatterns[style][topic];
+          }
+          // Create the cover letter
+          const letter = `Dear Hiring Manager,
+      ${generateParagraph("intro", writingStyle)} ${requirements[0]?.replace(/(?:required|must have|looking for|responsibilities include)/, "").trim() || "the position"}.
+      With ${previousInfo.skills[0]?.replace(/(?:proficient in|experienced with|skilled at|expertise in)/, "").trim() || "relevant experience"}, I have ${previousInfo.achievements[0]?.replace(/(?:achieved|increased|improved|reduced|saved|generated)/, "").trim() || "demonstrated success"} in my previous roles. ${generateParagraph("transition", writingStyle)}, I have ${previousInfo.projects[0]?.replace(/(?:developed|created|managed|led)/, "").trim() || "contributed to significant projects"}.
+      My experience aligns perfectly with ${keySkills[0]?.trim() || "your requirements"}. I have consistently ${previousInfo.achievements[1]?.replace(/(?:achieved|increased|improved|reduced|saved|generated)/, "").trim() || "delivered results"} while maintaining high standards of quality and innovation.
+      ${generateParagraph("closing", writingStyle)} your team's success and growth.
+      Best regards,
+      [Your Name]`;
+          return letter;
+        }
+        function generateAIResponse(userMessage) {
+          const message = userMessage.toLowerCase();
+          if (message.includes("help") || message.includes("how")) {
+            return "I can help you create a professional cover letter. Just paste your previous cover letters and the new job description in the text areas above, and I'll help you generate a personalized letter.";
+          } else if (message.includes("template") || message.includes("example")) {
+            return "We offer various professional templates tailored to different industries. To see examples, try generating a cover letter or check our template gallery in the menu above.";
+          } else if (
+            message.includes("price") ||
+            message.includes("cost") ||
+            message.includes("subscription")
+          ) {
+            return "We offer several subscription plans starting from £9.99/month. The Pro plan at £19.99/month includes unlimited cover letters and premium templates. Check our pricing section for more details.";
+          } else if (message.includes("thank")) {
+            return "You're welcome! Let me know if you need any other assistance with your cover letter.";
+          } else {
+            return "I'm here to help with your cover letter needs. You can ask me about our templates, pricing, or how to create a personalized cover letter. What would you like to know?";
+          }
+        }
+        sendButton.addEventListener("click", function () {
+          const message = chatInput.value.trim();
+          if (message) {
+            addMessage(message, false);
+            chatInput.value = "";
+            setTimeout(() => {
+              addMessage(generateAIResponse(message), true);
+            }, 500);
+          }
+        });
+        chatInput.addEventListener("keypress", function (e) {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            sendButton.click();
+          }
+        });
+        generateButton.addEventListener("click", function () {
+          if (!previousLetters.value.trim() || !newJob.value.trim()) {
+            addMessage(
+              "Please provide both your previous cover letters and the new job description.",
+            );
+            return;
+          }
+          addMessage("Analyzing your previous cover letters and writing style...");
+          setTimeout(() => {
+            addMessage("Matching your experience with job requirements...");
+            setTimeout(() => {
+              let coverLetter = generateCoverLetter(
+                previousLetters.value,
+                newJob.value,
+                chatInput.value,
+              );
+              coverLetter = validateLogic(coverLetter);
+              addMessage(
+                "Here's your personalized cover letter, crafted using your writing style and relevant experience:",
+              );
+              addMessage(coverLetter);
+              addMessage(
+                "Would you like to refine this further? Add any specific points or adjustments you'd like to make, and I'll help you customize it.",
+              );
+            }, 1500);
+          }, 1500);
+        });
+        chatInput.addEventListener("keypress", function (e) {
+          if (
+            e.key === "Enter" &&
+            !e.shiftKey &&
+            previousLetters.value &&
+            newJob.value
+          ) {
+            e.preventDefault();
+            const feedback = chatInput.value.trim();
+            if (feedback) {
+              addMessage(feedback, false);
+              chatInput.value = "";
+              setTimeout(() => {
+                let refinedLetter = generateCoverLetter(
+                  previousLetters.value,
+                  newJob.value,
+                  feedback,
+                );
+                refinedLetter = validateLogic(refinedLetter);
+                addMessage("I've refined your cover letter based on your feedback:");
+                addMessage(refinedLetter);
+                addMessage("Is there anything else you'd like to adjust?");
+              }, 1000);
+            }
+          }
+        });
+      });
+    </script>
+    <script id="faq-interaction">
+      document.addEventListener("DOMContentLoaded", function () {
+        const faqToggles = document.querySelectorAll("[data-faq-toggle]");
+        faqToggles.forEach((toggle) => {
+          toggle.addEventListener("click", function () {
+            const content = this.nextElementSibling;
+            const icon = this.querySelector("i");
+            // Toggle content visibility
+            if (content.classList.contains("hidden")) {
+              content.classList.remove("hidden");
+              icon.classList.remove("ri-arrow-down-s-line");
+              icon.classList.add("ri-arrow-up-s-line");
+            } else {
+              content.classList.add("hidden");
+              icon.classList.remove("ri-arrow-up-s-line");
+              icon.classList.add("ri-arrow-down-s-line");
+            }
+          });
+        });
+      });
+    </script>
+    <script id="checkbox-interaction">
+      document.addEventListener("DOMContentLoaded", function () {
+        const checkbox = document.getElementById("annual-billing");
+        checkbox.addEventListener("change", function () {
+          // Here you would typically update pricing to reflect annual discount
+          console.log("Annual billing toggled:", this.checked);
+        });
+      });
+    </script>
+  </body>
+</html>
